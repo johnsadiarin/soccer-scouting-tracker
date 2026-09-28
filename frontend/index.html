@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Soccer Scouting Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Soccer Scouting Tracker</h1>
+        <p>Player Database & Match Analysis</p>
+    </header>
+
+    <main>
+
+        <section class="card">
+
+            <h2>Add Player</h2>
+
+            <form id="playerForm">
+
+                <label>First Name</label>
+                <input
+                    type="text"
+                    id="firstName"
+                    placeholder="James"
+                    required
+                >
+
+                <label>Last Name</label>
+                <input
+                    type="text"
+                    id="lastName"
+                    placeholder="Maddison"
+                    required
+                >
+
+                <label>Position</label>
+
+                <select id="position">
+
+                    <option value="GK">Goalkeeper</option>
+
+                    <option value="CB">Center Back</option>
+                    <option value="LB">Left Back</option>
+                    <option value="RB">Right Back</option>
+
+                    <option value="CDM">Defensive Midfielder</option>
+                    <option value="CM">Central Midfielder</option>
+                    <option value="CAM">Attacking Midfielder</option>
+
+                    <option value="LW">Left Wing</option>
+                    <option value="RW">Right Wing</option>
+
+                    <option value="ST">Striker</option>
+
+                </select>
+
+                <label>Nationality</label>
+
+                <input
+                    type="text"
+                    id="nationality"
+                    placeholder="England"
+                    required
+                >
+
+                <button type="submit">
+                    Add Player
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>Player Database</h2>
+
+            <div id="playerList">
+
+                <p>
+                    Players will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

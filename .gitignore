@@ -1,2 +1,3 @@
 database/soccer.db
 database/soccer.db-journal
+.venv/

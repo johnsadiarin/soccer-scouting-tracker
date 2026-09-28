@@ -1,6 +1,22 @@
 const playerForm = document.getElementById("playerForm");
 const playerList = document.getElementById("playerList");
+const teamSelect = document.getElementById("team");
 
+async function loadTeams() {
+    const response = await fetch("/api/teams");
+    const teams = await response.json();
+
+    teamSelect.innerHTML = '<option value="">Select Team</option>';
+
+    teams.forEach(team => {
+        const option = document.createElement("option");
+
+        option.value = team.team_id;
+        option.textContent = team.name;
+
+        teamSelect.appendChild(option);
+    });
+}
 
 async function loadPlayers() {
     const response = await fetch("/api/players");
@@ -37,7 +53,8 @@ playerForm.addEventListener("submit", async function(event) {
         first_name: firstName,
         last_name: lastName,
         position: position,
-        nationality: nationality
+        nationality: nationality,
+        team_id: document.getElementById("team").value || null
     };
 
     const response = await fetch("/api/players", {
@@ -56,5 +73,5 @@ playerForm.addEventListener("submit", async function(event) {
     }
 });
 
-
+loadTeams();
 loadPlayers();

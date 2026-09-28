@@ -11,6 +11,7 @@ def add_player():
     last_name = input("Last name: ")
     position = input("Position: ")
     nationality = input("Nationality: ")
+    team_id = data.get("team_id")
 
     connection = sqlite3.connect(DATABASE_PATH)
 

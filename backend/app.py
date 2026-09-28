@@ -24,9 +24,18 @@ def get_players():
     cursor = connection.cursor()
 
     cursor.execute("""
-        SELECT player_id, first_name, last_name, position, nationality
+        SELECT
+            players.player_id,
+            players.first_name,
+            players.last_name,
+            players.position,
+            players.nationality,
+            players.team_id,
+            teams.name
         FROM players
-        ORDER BY player_id DESC
+        LEFT JOIN teams
+            ON players.team_id = teams.team_id
+        ORDER BY players.player_id DESC
     """)
 
     players = cursor.fetchall()
@@ -40,10 +49,40 @@ def get_players():
             "first_name": player[1],
             "last_name": player[2],
             "position": player[3],
-            "nationality": player[4]
+            "nationality": player[4],
+            "team_id": player[5],
+            "team_name": player[6]
         })
 
     return jsonify(player_list)
+
+
+@app.route("/api/teams", methods=["GET"])
+def get_teams():
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT team_id, name, league, country
+        FROM teams
+        ORDER BY team_id DESC
+    """)
+
+    teams = cursor.fetchall()
+    connection.close()
+
+    team_list = []
+
+    for team in teams:
+        team_list.append({
+            "team_id": team[0],
+            "name": team[1],
+            "league": team[2],
+            "country": team[3]
+        })
+
+    return jsonify(team_list)
+
 
 @app.route("/api/players", methods=["POST"])
 def add_player():
@@ -53,6 +92,7 @@ def add_player():
     last_name = data.get("last_name")
     position = data.get("position")
     nationality = data.get("nationality")
+    team_id = data.get("team_id")
 
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
@@ -60,10 +100,10 @@ def add_player():
     cursor.execute(
         """
         INSERT INTO players
-        (first_name, last_name, position, nationality)
-        VALUES (?, ?, ?, ?)
+        (first_name, last_name, position, nationality, team_id)
+        VALUES (?, ?, ?, ?, ?)
         """,
-        (first_name, last_name, position, nationality)
+        (first_name, last_name, position, nationality, team_id)
     )
 
     connection.commit()
@@ -78,4 +118,4 @@ def add_player():
     }), 201
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

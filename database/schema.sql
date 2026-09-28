@@ -63,3 +63,24 @@ CREATE TABLE IF NOT EXISTS scouting_reports (
     FOREIGN KEY (player_id) REFERENCES players(player_id),
     FOREIGN KEY (match_id) REFERENCES matches(match_id)
 );
+
+CREATE TABLE IF NOT EXISTS events (
+    event_id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    match_id INTEGER NOT NULL,
+    player_id INTEGER NOT NULL,
+
+    event_type TEXT NOT NULL,
+    event_outcome TEXT,
+
+    minute INTEGER,
+    second INTEGER,
+
+    x REAL,
+    y REAL,
+    end_x REAL,
+    end_y REAL,
+
+    FOREIGN KEY (match_id) REFERENCES matches(match_id),
+    FOREIGN KEY (player_id) REFERENCES players(player_id)
+);

@@ -32,10 +32,11 @@ async function loadPlayers() {
     players.forEach(function(player) {
         const playerElement = document.createElement("p");
 
-        playerElement.textContent =
-            `${player.first_name} ${player.last_name} | ` +
-            `${player.position} | ${player.nationality}`;
-
+    playerElement.textContent =
+        `${player.first_name} ${player.last_name} | ` +
+        `${player.position} | ${player.nationality} | ` +
+        `${player.team_name || "No Team"}`;
+        
         playerList.appendChild(playerElement);
     });
 }

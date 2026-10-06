@@ -1,3 +1,7 @@
 database/soccer.db
 database/soccer.db-journal
 .venv/
+# Private match footage
+private/
+
+.DS_Store

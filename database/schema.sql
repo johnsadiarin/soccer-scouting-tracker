@@ -73,6 +73,10 @@ CREATE TABLE IF NOT EXISTS events (
     event_type TEXT NOT NULL,
     event_outcome TEXT,
 
+    foot TEXT,
+    under_pressure INTEGER DEFAULT 0,
+    line_breaking INTEGER DEFAULT 0,
+
     minute INTEGER,
     second INTEGER,
 

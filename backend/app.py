@@ -5,6 +5,7 @@ import sqlite3
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
 DATABASE_PATH = BASE_DIR / "database" / "soccer.db"
+VIDEO_DIR = BASE_DIR / "private" / "videos"
 
 app = Flask(__name__)
 
@@ -17,6 +18,10 @@ def home():
 @app.route("/<path:filename>")
 def frontend_files(filename):
     return send_from_directory(FRONTEND_DIR, filename)
+
+@app.route("/video/<path:filename>")
+def video_file(filename):
+    return send_from_directory(VIDEO_DIR, filename)
 
 @app.route("/api/players", methods=["GET"])
 def get_players():
@@ -116,6 +121,61 @@ def add_player():
         "message": "Player added successfully",
         "player_id": player_id
     }), 201
+    
+@app.route("/api/events", methods=["POST"])
+def add_event():
+    data = request.get_json()
+
+    match_id = data.get("match_id")
+    player_id = data.get("player_id")
+    event_type = data.get("event_type")
+    event_outcome = data.get("event_outcome")
+    foot = data.get("foot")
+    under_pressure = data.get("under_pressure", 0)
+    line_breaking = data.get("line_breaking", 0)
+    minute = data.get("minute")
+    second = data.get("second")
+
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO events (
+            match_id,
+            player_id,
+            event_type,
+            event_outcome,
+            foot,
+            under_pressure,
+            line_breaking,
+            minute,
+            second
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            match_id,
+            player_id,
+            event_type,
+            event_outcome,
+            foot,
+            under_pressure,
+            line_breaking,
+            minute,
+            second
+        )
+    )
+
+    connection.commit()
+    event_id = cursor.lastrowid
+    connection.close()
+
+    return jsonify({
+        "message": "Event saved successfully",
+        "event_id": event_id
+    }), 201
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

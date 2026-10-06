@@ -97,6 +97,82 @@
             </div>
 
         </section>
+    <section class="card">
+        <h2>Match Analysis</h2>
+
+        <h3>vs UOP</h3>
+
+        <video id="matchVideo" width="100%" controls>
+            <source src="/video/vs-uop-autofollow-download.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+       
+        <p>
+            Current Time:
+            <span id="videoTime">00:00</span>
+        </p>
+
+        <button id="tagEventButton" type="button">
+            Tag Event at Current Time
+</button>
+
+<div id="eventTagger">
+    <h3>Event Tagger</h3>
+
+    <p>
+        Tagged Time:
+        <span id="taggedTime">--:--</span>
+    </p>
+
+    <label>Player</label>
+    <select id="eventPlayer">
+        <option value="">Select Player</option>
+    </select>
+
+    <label>Event</label>
+    <select id="eventType">
+        <option value="">Select Event</option>
+        <option value="Pass">Pass</option>
+        <option value="Carry">Carry</option>
+        <option value="Shot">Shot</option>
+        <option value="Tackle">Tackle</option>
+        <option value="Interception">Interception</option>
+        <option value="Aerial Duel">Aerial Duel</option>
+        <option value="Recovery">Recovery</option>
+    </select>
+
+    <label>Outcome</label>
+    <select id="eventOutcome">
+        <option value="">Select Outcome</option>
+        <option value="Successful">Successful</option>
+        <option value="Unsuccessful">Unsuccessful</option>
+    </select>
+
+    <label>Foot</label>
+    <select id="eventFoot">
+        <option value="">Select Foot</option>
+        <option value="Right">Right</option>
+        <option value="Left">Left</option>
+    </select>
+
+    <label>Under Pressure?</label>
+    <select id="eventPressure">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+    </select>
+
+    <label>Line Breaking?</label>
+    <select id="eventLineBreaking">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+    </select>
+
+    <button id="saveEventButton" type="button">
+        Save Event
+    </button>
+</div>
+        
+    </section>
 
     </main>
 

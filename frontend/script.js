@@ -76,3 +76,51 @@ playerForm.addEventListener("submit", async function(event) {
 
 loadTeams();
 loadPlayers();
+
+// Match video timestamp tracking
+const matchVideo = document.getElementById("matchVideo");
+const videoTime = document.getElementById("videoTime");
+const tagEventButton = document.getElementById("tagEventButton");
+
+function formatVideoTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+
+    return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+}
+
+matchVideo.addEventListener("timeupdate", function() {
+    videoTime.textContent = formatVideoTime(matchVideo.currentTime);
+});
+
+const taggedTime = document.getElementById("taggedTime");
+
+let selectedEventTimestamp = null;
+
+tagEventButton.addEventListener("click", function() {
+    selectedEventTimestamp = Math.floor(matchVideo.currentTime);
+
+    taggedTime.textContent = formatVideoTime(selectedEventTimestamp);
+
+    console.log("Event tagged at:", selectedEventTimestamp);
+});
+
+const eventPlayer = document.getElementById("eventPlayer");
+
+async function loadEventPlayers() {
+    const response = await fetch("/api/players");
+    const players = await response.json();
+
+    eventPlayer.innerHTML = '<option value="">Select Player</option>';
+
+    players.forEach(function(player) {
+        const option = document.createElement("option");
+
+        option.value = player.player_id;
+        option.textContent = `${player.first_name} ${player.last_name}`;
+
+        eventPlayer.appendChild(option);
+    });
+}
+
+loadEventPlayers();
